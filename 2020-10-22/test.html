@@ -1,36 +1,90 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en-US">
 <head>
 <meta charset="utf-8">
-<title>2020년 10월 22일 학습 내용1</title>
-<style>
-p{
-    font-family: 'helvetica neue', helvetica, sans-serif;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-align: center;
-    border: 2px solid rgba(0,0,200,0.6);
-    background: rgba(0,0,200,0.3);
-    color: rgba(0,0,200,0.6);
-    box-shadow: 1px 1px 2px rgba(0,0,200,0.4);
-    border-radius: 10px;
-    padding: 3px 10px;
-    display: inline-block;
-    cursor:pointer;
-}
-</style>
+<title>Test</title>
 </head>
 <body>
-<p>Player 1: Chris</p>
+<p class="guesses"></p>
+<p class="lastResult"></p>
+<p class="lowOrHi"></p>
+<label for="guessField">Enter a guess: </label>
+<input type="text" id="guessField" class="guessField">
+<input type="submit" value="Submit guess" class="guessSubmit">
+
 <script>
-function update_name() {
-    const name = prompt('이름을 입력해라!');
-    para.textContent = 'Player 1: ' + name;
+var randomNumber = Math.floor(Math.random() * 100) + 1;
+
+var guesses = document.querySelector('.guesses');
+var lastResult = document.querySelector('.lastResult');
+var lowOrHi = document.querySelector('.lowOrHi');
+
+var guessSubmit = document.querySelector('.guessSubmit');
+var guessField = document.querySelector('.guessField');
+
+var guessCount = 1;
+var resetButton;
+
+function checkGuess() {
+    var userGuess = Number(guessField.value); // 유저가 작성한 숫자
+    if (guessCount === 1) {
+        guesses.textContent = 'Previous guesses: ';
+    }
+    guesses.textContent += userGuess + ' ';
+
+    if (userGuess === randomNumber) {
+        lastResult.textContent = 'Congratulations! You got it right!';
+        lastResult.style.backgroundColor = 'green';
+        lowOrHi.textContent = '';
+        setGameOver();
+    } else if (guessCount === 10) {
+        lastResult.textContent = '!!!GAME OVER!!!';
+        setGameOver();
+    } else {
+        lastResult.textContent = 'Wrong!';
+        lastResult.style.backgroundColor = 'red';
+        if(userGuess < randomNumber) {
+            lowOrHi.textContent = 'Last guess was too low!';
+        } else if(userGuess > randomNumber) {
+            lowOrHi.textContent = 'Last guess was too high!';
+        }
+    }
+
+    guessCount++;
+    guessField.value = '';
+    guessField.focus();
 }
 
-const para = document.querySelector('p');
+function setGameOver() {
+    guessField.disabled = true;
+    guessSubmit.disabled = true;
+    resetButton = document.createElement('button');
+    resetButton.textContent = 'Start new game';
+    document.body.appendChild(resetButton);
+    resetButton.addEventListener('click', resetGame);
+}
 
-para.addEventListener('click', update_name);
+function resetGame() {
+    guessCount = 1;
+
+    var resetParas = document.querySelectorAll('.resultParas p');
+    for (var i = 0 ; i < resetParas.length ; i++) {
+        resetParas[i].textContent = '';
+    }
+
+    resetButton.parentNode.removeChild(resetButton);
+
+    guessField.disabled = false;
+    guessSubmit.disabled = false;
+    guessField.value = '';
+    guessField.focus();
+
+    lastResult.style.backgroundColor = 'white';
+
+    randomNumber = Math.floor(Math.random() * 100) + 1;
+}
+
+guessSubmit.addEventListener('click', checkGuess);
 </script>
 </body>
 </html>

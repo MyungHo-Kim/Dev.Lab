@@ -39,4 +39,5 @@
 <ul>
     <li><a href="https://developer.mozilla.org/ko/" target="_blank">https://developer.mozilla.org/ko/</a></li>
     <li><a href="https://opentutorials.org/" target="_blank">https://opentutorials.org/</a></li>
+    <li><a href="https://docs.google.com/document/d/12TfBKnLVJ7SJt02HSCFyjnOxDdfFl5zlBCSCX0f51Ww/edit" target="_blank">코딩 컨벤션</a></li>
 </ul>
