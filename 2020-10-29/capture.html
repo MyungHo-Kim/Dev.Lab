@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>이벤트 캡쳐</title>
+<style>
+.wrap{padding:30px; border:5px solid #eee;}
+</style>
+</head>
+<body>
+    <form>FORM
+        <div>DIV
+            <p>P</p>
+        </div>
+    </form>
+<script>
+for (let elem of document.querySelectorAll('*')) {
+    elem.addEventListener('click', function (e) {
+        alert('캡쳐링:'+ elem.tagName +'');
+
+    }, true);
+    elem.addEventListener('click', function (e) {
+        alert('버블링:'+ elem.tagName +'');
+    });
+}
+</script>
+</body>
+</html>
