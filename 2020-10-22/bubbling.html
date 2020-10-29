@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>이벤트 버블링</title>
+<style>
+h2{font-size:20px; margin-top:30px;}
+.wrap{padding:30px; border:5px solid #eee;}
+</style>
+</head>
+<body>
+    <h2>버블링 적용 예시(click)</h2>
+    <div class="wrap">
+        <div id="event_handler1">
+            1번 핸들러
+            <div id="event_handler2">
+                2번 핸들러
+                <button id="event_handler3">3번 핸들러</button>
+            </div>
+        </div>
+    </div>
+    <h2>버블링이 적용되지 않는 이벤트</h2>
+    <div class="wrap">
+        <div id="event_handler4">
+            1번 핸들러
+            <div id="event_handler5">
+                2번 핸들러
+                <button id="event_handler6">3번 핸들러</button>
+            </div>
+        </div>
+    </div>
+    <h2>버블링 중단</h2>
+    <div class="wrap">
+        <div id="event_handler7">
+            1번 핸들러
+            <div id="event_handler8">
+                2번 핸들러
+                <button id="event_handler9">3번 핸들러</button>
+            </div>
+        </div>
+    </div>
+<script>
+var event_handler1 = document.querySelectorAll('#event_handler1')[0];
+var event_handler2 = document.querySelectorAll('#event_handler2')[0];
+var event_handler3 = document.querySelectorAll('#event_handler3')[0];
+var event_handler4 = document.querySelectorAll('#event_handler4')[0];
+var event_handler5 = document.querySelectorAll('#event_handler5')[0];
+var event_handler6 = document.querySelectorAll('#event_handler6')[0];
+var event_handler7 = document.querySelectorAll('#event_handler7')[0];
+var event_handler8 = document.querySelectorAll('#event_handler8')[0];
+var event_handler9 = document.querySelectorAll('#event_handler9')[0];
+event_handler1.addEventListener('click', function () {
+    alert('event_handler1');
+});
+event_handler2.addEventListener('click', function () {
+    alert('event_handler2');
+});
+event_handler3.addEventListener('click', function () {
+    alert('event_handler3');
+});
+event_handler4.addEventListener('focus', function () {
+    alert('event_handler4');
+});
+event_handler5.addEventListener('focus', function () {
+    alert('event_handler5');
+});
+event_handler6.addEventListener('focus', function () {
+    alert('event_handler6');
+});
+event_handler7.addEventListener('click', function () {
+    alert('event_handler4');
+});
+event_handler8.addEventListener('click', function () {
+    alert('event_handler5');
+});
+event_handler9.addEventListener('click', function (event) {
+    event.stopPropagation();
+    alert('event_handler6');
+});
+</script>
+</body>
+</html>
